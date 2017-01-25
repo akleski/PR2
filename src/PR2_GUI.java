@@ -75,83 +75,83 @@ public class PR2_GUI extends javax.swing.JFrame {
     private void initComponents() {
 
         rbg_F = new javax.swing.ButtonGroup();
-        b_read = new javax.swing.JButton();
+        btn_readDataset = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        l_dataset_name_l = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        l_datasetInfo_panel = new javax.swing.JLabel();
+        l_datasetName = new javax.swing.JLabel();
+        l_classes = new javax.swing.JLabel();
+        l_features = new javax.swing.JLabel();
         l_dataset_name = new javax.swing.JLabel();
-        l_nfeatures = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        l_numberOfFeatures = new javax.swing.JLabel();
+        l_numberOfClasses = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        selbox_nfeat = new javax.swing.JComboBox();
+        l_featureSpace_panel = new javax.swing.JLabel();
+        l_FS_dimension = new javax.swing.JLabel();
+        comboBox_numOfDimensions = new javax.swing.JComboBox();
         jSeparator1 = new javax.swing.JSeparator();
-        f_rb_extr = new javax.swing.JRadioButton();
-        f_rb_sel = new javax.swing.JRadioButton();
+        radioBtn_featureExtraction = new javax.swing.JRadioButton();
+        radioBtn_featureSelection = new javax.swing.JRadioButton();
         b_deriveFS = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
-        f_combo_criterion = new javax.swing.JComboBox();
-        f_combo_PCA_LDA = new javax.swing.JComboBox();
-        jLabel12 = new javax.swing.JLabel();
-        tf_PCA_Energy = new javax.swing.JTextField();
+        l_criterion = new javax.swing.JLabel();
+        comboBox_feature_criterion = new javax.swing.JComboBox();
+        comboBox_PCA_LDA = new javax.swing.JComboBox();
+        l_energy = new javax.swing.JLabel();
+        textField_PCA_Energy = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         l_NewDim = new javax.swing.JLabel();
-        sfsEnableCheckbox = new javax.swing.JCheckBox();
-        jPanel1 = new javax.swing.JPanel();
+        checkBox_SFS = new javax.swing.JCheckBox();
         jPanel4 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
-        b_Train = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jLabel16 = new javax.swing.JLabel();
-        tf_TrainSetSize = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
-        labelAName = new javax.swing.JLabel();
-        labelBName = new javax.swing.JLabel();
-        labelClassAValue = new javax.swing.JLabel();
-        labelClassBValue = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        kValueBox = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        effLabel = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        l_FLD_winner = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        l_FLD_val = new javax.swing.JLabel();
+        l_classifierMethod = new javax.swing.JLabel();
+        comboBox_classifier_list = new javax.swing.JComboBox();
+        btn_Train = new javax.swing.JButton();
+        btn_execute_train = new javax.swing.JButton();
+        l_trainingPart = new javax.swing.JLabel();
+        textField_TrainSetSize = new javax.swing.JTextField();
+        l_percent_sign = new javax.swing.JLabel();
+        l_classA = new javax.swing.JLabel();
+        l_classB = new javax.swing.JLabel();
+        l_ClassA_value = new javax.swing.JLabel();
+        l_ClassB_value = new javax.swing.JLabel();
+        l_K_equals = new javax.swing.JLabel();
+        textBox_k_value = new javax.swing.JTextField();
+        l_eff = new javax.swing.JLabel();
+        l_eff_value = new javax.swing.JLabel();
+        l_classifier = new javax.swing.JLabel();
+        panel_results = new javax.swing.JPanel();
+        l_FSwinner = new javax.swing.JLabel();
+        l_FS_winner_value = new javax.swing.JLabel();
+        l_FLDvalue = new javax.swing.JLabel();
+        l_FLD_value = new javax.swing.JLabel();
+        btn_parseDataset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(null);
 
-        b_read.setText("Read dataset");
-        b_read.addActionListener(new java.awt.event.ActionListener() {
+        btn_readDataset.setText("Read dataset");
+        btn_readDataset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                b_readActionPerformed(evt);
+                btn_readDatasetActionPerformed(evt);
             }
         });
-        getContentPane().add(b_read);
-        b_read.setBounds(20, 10, 130, 23);
 
         jPanel2.setBackground(new java.awt.Color(204, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
-        jLabel1.setText("Dataset info");
+        l_datasetInfo_panel.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        l_datasetInfo_panel.setText("Dataset info");
 
-        l_dataset_name_l.setText("Name:");
+        l_datasetName.setText("Name:");
 
-        jLabel3.setText("Classes:");
+        l_classes.setText("Classes:");
 
-        jLabel4.setText("Features:");
+        l_features.setText("Features:");
 
+        l_dataset_name.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
         l_dataset_name.setText("...");
 
-        l_nfeatures.setText("...");
+        l_numberOfFeatures.setText("...");
+
+        l_numberOfClasses.setText("...");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -161,89 +161,64 @@ public class PR2_GUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(l_dataset_name_l)
-                        .addGap(18, 18, 18)
-                        .addComponent(l_dataset_name))
-                    .addComponent(jLabel1))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(115, 115, 115)
-                        .addComponent(jLabel3))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(94, 94, 94)
-                        .addComponent(jLabel4)
+                        .addComponent(l_datasetName)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(l_nfeatures)))
-                .addGap(100, 100, 100))
+                        .addComponent(l_dataset_name))
+                    .addComponent(l_datasetInfo_panel))
+                .addGap(92, 92, 92)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(l_classes)
+                    .addComponent(l_features))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(l_numberOfFeatures)
+                    .addComponent(l_numberOfClasses))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3))
+                    .addComponent(l_datasetInfo_panel)
+                    .addComponent(l_classes)
+                    .addComponent(l_numberOfClasses))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(l_dataset_name_l)
-                    .addComponent(jLabel4)
+                    .addComponent(l_datasetName)
+                    .addComponent(l_features)
                     .addComponent(l_dataset_name)
-                    .addComponent(l_nfeatures))
-                .addContainerGap(24, Short.MAX_VALUE))
+                    .addComponent(l_numberOfFeatures))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
-
-        getContentPane().add(jPanel2);
-        jPanel2.setBounds(10, 50, 320, 80);
-
-        jButton2.setText("Parse dataset");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton2);
-        jButton2.setBounds(190, 10, 130, 23);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 204));
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel3.setLayout(null);
 
-        jLabel5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
-        jLabel5.setText("Feature space");
-        jPanel3.add(jLabel5);
-        jLabel5.setBounds(14, 2, 118, 26);
+        l_featureSpace_panel.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        l_featureSpace_panel.setText("Feature space");
 
-        jLabel6.setText("FS Dimension");
-        jPanel3.add(jLabel6);
-        jLabel6.setBounds(178, 9, 63, 14);
+        l_FS_dimension.setText("FS Dimension");
 
-        selbox_nfeat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5" }));
-        jPanel3.add(selbox_nfeat);
-        selbox_nfeat.setBounds(268, 6, 40, 22);
-        jPanel3.add(jSeparator1);
-        jSeparator1.setBounds(14, 41, 290, 10);
+        comboBox_numOfDimensions.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5" }));
 
-        f_rb_extr.setBackground(new java.awt.Color(255, 255, 204));
-        rbg_F.add(f_rb_extr);
-        f_rb_extr.setText("Feature extraction");
-        f_rb_extr.addActionListener(new java.awt.event.ActionListener() {
+        radioBtn_featureExtraction.setBackground(new java.awt.Color(255, 255, 204));
+        rbg_F.add(radioBtn_featureExtraction);
+        radioBtn_featureExtraction.setText("Feature extraction");
+        radioBtn_featureExtraction.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                f_rb_extrActionPerformed(evt);
+                radioBtn_featureExtractionActionPerformed(evt);
             }
         });
-        jPanel3.add(f_rb_extr);
-        f_rb_extr.setBounds(10, 110, 150, 23);
 
-        f_rb_sel.setBackground(new java.awt.Color(255, 255, 204));
-        rbg_F.add(f_rb_sel);
-        f_rb_sel.setSelected(true);
-        f_rb_sel.setText("Feature selection");
-        f_rb_sel.addActionListener(new java.awt.event.ActionListener() {
+        radioBtn_featureSelection.setBackground(new java.awt.Color(255, 255, 204));
+        rbg_F.add(radioBtn_featureSelection);
+        radioBtn_featureSelection.setSelected(true);
+        radioBtn_featureSelection.setText("Feature selection");
+        radioBtn_featureSelection.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                f_rb_selActionPerformed(evt);
+                radioBtn_featureSelectionActionPerformed(evt);
             }
         });
-        jPanel3.add(f_rb_sel);
-        f_rb_sel.setBounds(10, 60, 140, 23);
 
         b_deriveFS.setText("Derive Feature Space");
         b_deriveFS.addActionListener(new java.awt.event.ActionListener() {
@@ -251,219 +226,376 @@ public class PR2_GUI extends javax.swing.JFrame {
                 b_deriveFSActionPerformed(evt);
             }
         });
-        jPanel3.add(b_deriveFS);
-        b_deriveFS.setBounds(10, 180, 292, 23);
 
-        jLabel10.setText("Criterion");
-        jPanel3.add(jLabel10);
-        jLabel10.setBounds(200, 50, 41, 14);
+        l_criterion.setText("Criterion");
 
-        f_combo_criterion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fisher discriminant", "Classification error" }));
-        jPanel3.add(f_combo_criterion);
-        f_combo_criterion.setBounds(160, 70, 140, 22);
+        comboBox_feature_criterion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fisher discriminant", "Classification error" }));
 
-        f_combo_PCA_LDA.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "PCA", "LDA" }));
-        f_combo_PCA_LDA.setEnabled(false);
-        jPanel3.add(f_combo_PCA_LDA);
-        f_combo_PCA_LDA.setBounds(190, 110, 70, 22);
+        comboBox_PCA_LDA.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "PCA", "LDA" }));
+        comboBox_PCA_LDA.setEnabled(false);
 
-        jLabel12.setText("Energy");
-        jPanel3.add(jLabel12);
-        jLabel12.setBounds(20, 150, 34, 14);
+        l_energy.setText("Energy");
 
-        tf_PCA_Energy.setText("80");
-        jPanel3.add(tf_PCA_Energy);
-        tf_PCA_Energy.setBounds(70, 150, 30, 20);
+        textField_PCA_Energy.setText("80");
 
         jLabel14.setText("%");
-        jPanel3.add(jLabel14);
-        jLabel14.setBounds(110, 150, 20, 14);
 
         jLabel15.setText("New dimension:");
-        jPanel3.add(jLabel15);
-        jLabel15.setBounds(160, 150, 75, 14);
 
         l_NewDim.setText("...");
-        jPanel3.add(l_NewDim);
-        l_NewDim.setBounds(270, 150, 30, 14);
 
-        sfsEnableCheckbox.setBackground(new java.awt.Color(255, 255, 204));
-        sfsEnableCheckbox.setText("SFS");
-        jPanel3.add(sfsEnableCheckbox);
-        sfsEnableCheckbox.setBounds(30, 80, 110, 23);
+        checkBox_SFS.setBackground(new java.awt.Color(255, 255, 204));
+        checkBox_SFS.setText("SFS");
 
-        getContentPane().add(jPanel3);
-        jPanel3.setBounds(10, 140, 320, 220);
-
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 156, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(radioBtn_featureSelection, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGap(21, 21, 21)
+                                        .addComponent(checkBox_SFS, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(comboBox_feature_criterion, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(l_criterion)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                        .addComponent(radioBtn_featureExtraction, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                        .addComponent(l_energy)
+                                        .addGap(16, 16, 16)
+                                        .addComponent(textField_PCA_Energy, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(36, 36, 36)))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(comboBox_PCA_LDA, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jLabel15)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(l_NewDim, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(l_featureSpace_panel)
+                        .addGap(18, 18, 18)
+                        .addComponent(l_FS_dimension)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboBox_numOfDimensions, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(b_deriveFS, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 126, Short.MAX_VALUE)
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(l_featureSpace_panel)
+                    .addComponent(l_FS_dimension)
+                    .addComponent(comboBox_numOfDimensions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(radioBtn_featureSelection)
+                            .addComponent(l_criterion))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(checkBox_SFS))
+                    .addComponent(comboBox_feature_criterion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(radioBtn_featureExtraction)
+                    .addComponent(comboBox_PCA_LDA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(l_energy)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(textField_PCA_Energy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel14)
+                        .addComponent(jLabel15)
+                        .addComponent(l_NewDim)))
+                .addGap(10, 10, 10)
+                .addComponent(b_deriveFS)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(530, 10, 160, 130);
 
         jPanel4.setBackground(new java.awt.Color(204, 255, 204));
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel4.setLayout(null);
 
-        jLabel8.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
-        jLabel8.setText("Classifier");
-        jPanel4.add(jLabel8);
-        jLabel8.setBounds(10, 0, 79, 26);
+        l_classifierMethod.setText("Method");
 
-        jLabel9.setText("Method");
-        jPanel4.add(jLabel9);
-        jLabel9.setBounds(14, 44, 36, 14);
+        comboBox_classifier_list.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Nearest neighbor (NN)", "Nearest Mean (NM)", "k-Nearest Neighbor (k-NN)", "k-Nearest Mean (k-NM)" }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Nearest neighbor (NN)", "Nearest Mean (NM)", "k-Nearest Neighbor (k-NN)", "k-Nearest Mean (k-NM)" }));
-        jPanel4.add(jComboBox2);
-        jComboBox2.setBounds(74, 41, 153, 22);
-
-        b_Train.setText("Train");
-        b_Train.addActionListener(new java.awt.event.ActionListener() {
+        btn_Train.setText("Train");
+        btn_Train.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                b_TrainActionPerformed(evt);
+                btn_TrainActionPerformed(evt);
             }
         });
-        jPanel4.add(b_Train);
-        b_Train.setBounds(40, 130, 98, 23);
 
-        jButton4.setText("Execute");
-        jButton4.setEnabled(false);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btn_execute_train.setText("Execute");
+        btn_execute_train.setEnabled(false);
+        btn_execute_train.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 b_ExecuteActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton4);
-        jButton4.setBounds(210, 130, 96, 23);
 
-        jLabel16.setText("Training part:");
-        jPanel4.add(jLabel16);
-        jLabel16.setBounds(20, 170, 80, 14);
+        l_trainingPart.setText("Training part:");
 
-        tf_TrainSetSize.setText("80");
-        jPanel4.add(tf_TrainSetSize);
-        tf_TrainSetSize.setBounds(110, 170, 20, 20);
+        textField_TrainSetSize.setText("80");
 
-        jLabel17.setText("%");
-        jPanel4.add(jLabel17);
-        jLabel17.setBounds(140, 170, 20, 14);
+        l_percent_sign.setText("%");
 
-        labelAName.setText("A:");
-        jPanel4.add(labelAName);
-        labelAName.setBounds(40, 80, 60, 14);
+        l_classA.setText("A:");
 
-        labelBName.setText("B:");
-        jPanel4.add(labelBName);
-        labelBName.setBounds(40, 100, 60, 14);
+        l_classB.setText("B:");
 
-        labelClassAValue.setText("0");
-        jPanel4.add(labelClassAValue);
-        labelClassAValue.setBounds(120, 80, 100, 14);
+        l_ClassA_value.setText("0");
 
-        labelClassBValue.setText("0");
-        jPanel4.add(labelClassBValue);
-        labelClassBValue.setBounds(120, 100, 110, 14);
+        l_ClassB_value.setText("0");
 
-        jLabel7.setText("K");
-        jLabel7.setMaximumSize(new java.awt.Dimension(42, 16));
-        jLabel7.setMinimumSize(new java.awt.Dimension(42, 16));
-        jPanel4.add(jLabel7);
-        jLabel7.setBounds(260, 44, 20, 14);
+        l_K_equals.setText("K=");
+        l_K_equals.setMaximumSize(new java.awt.Dimension(42, 16));
+        l_K_equals.setMinimumSize(new java.awt.Dimension(42, 16));
 
-        kValueBox.setText("5");
-        jPanel4.add(kValueBox);
-        kValueBox.setBounds(280, 41, 50, 20);
+        textBox_k_value.setText("5");
 
-        jLabel11.setText("Eff:");
-        jPanel4.add(jLabel11);
-        jLabel11.setBounds(200, 90, 30, 14);
+        l_eff.setText("Eff:");
 
-        effLabel.setText("...");
-        jPanel4.add(effLabel);
-        effLabel.setBounds(240, 90, 90, 14);
+        l_eff_value.setText("...");
 
-        getContentPane().add(jPanel4);
-        jPanel4.setBounds(340, 150, 350, 210);
+        l_classifier.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        l_classifier.setText("Classifier");
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Results"));
-        jPanel5.setLayout(null);
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(l_classifier)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(l_classifierMethod)
+                                .addGroup(jPanel4Layout.createSequentialGroup()
+                                    .addComponent(l_classA, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
+                                    .addGap(25, 25, 25))
+                                .addGroup(jPanel4Layout.createSequentialGroup()
+                                    .addComponent(l_classB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel4Layout.createSequentialGroup()
+                                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(l_ClassA_value, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(l_ClassB_value, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(l_eff)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(l_eff_value, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel4Layout.createSequentialGroup()
+                                    .addComponent(comboBox_classifier_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(l_K_equals, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(textBox_k_value, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addComponent(btn_Train, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_execute_train, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(l_trainingPart)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(textField_TrainSetSize, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(l_percent_sign, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(97, 97, 97))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(l_classifier)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(l_classifierMethod)
+                    .addComponent(comboBox_classifier_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l_K_equals, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textBox_k_value, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(l_classA)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(l_eff_value)
+                            .addComponent(l_eff)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(l_ClassA_value)
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(l_ClassB_value)
+                            .addComponent(l_classB))))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_Train)
+                    .addComponent(btn_execute_train))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(l_trainingPart)
+                    .addComponent(textField_TrainSetSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l_percent_sign))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
-        jLabel2.setText("FS Winner:");
-        jPanel5.add(jLabel2);
-        jLabel2.setBounds(10, 30, 70, 14);
+        panel_results.setBorder(javax.swing.BorderFactory.createTitledBorder("Results"));
 
-        l_FLD_winner.setText("xxx");
-        jPanel5.add(l_FLD_winner);
-        l_FLD_winner.setBounds(78, 30, 100, 14);
+        l_FSwinner.setText("FS Winner:");
 
-        jLabel13.setText("FLD value: ");
-        jPanel5.add(jLabel13);
-        jLabel13.setBounds(10, 60, 70, 14);
+        l_FS_winner_value.setText("xxx");
 
-        l_FLD_val.setText("vvv");
-        jPanel5.add(l_FLD_val);
-        l_FLD_val.setBounds(78, 60, 100, 14);
+        l_FLDvalue.setText("FLD value: ");
 
-        getContentPane().add(jPanel5);
-        jPanel5.setBounds(340, 10, 190, 130);
+        l_FLD_value.setText("vvv");
+
+        javax.swing.GroupLayout panel_resultsLayout = new javax.swing.GroupLayout(panel_results);
+        panel_results.setLayout(panel_resultsLayout);
+        panel_resultsLayout.setHorizontalGroup(
+            panel_resultsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_resultsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel_resultsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_resultsLayout.createSequentialGroup()
+                        .addComponent(l_FLDvalue)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(l_FLD_value, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panel_resultsLayout.createSequentialGroup()
+                        .addComponent(l_FSwinner)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(l_FS_winner_value, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        panel_resultsLayout.setVerticalGroup(
+            panel_resultsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_resultsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel_resultsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(l_FSwinner)
+                    .addComponent(l_FS_winner_value))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panel_resultsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(l_FLDvalue)
+                    .addComponent(l_FLD_value))
+                .addContainerGap(37, Short.MAX_VALUE))
+        );
+
+        btn_parseDataset.setText("Parse dataset");
+        btn_parseDataset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_parseDatasetActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btn_readDataset, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_parseDataset, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panel_results, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_readDataset)
+                            .addComponent(btn_parseDataset))
+                        .addGap(10, 10, 10)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panel_results, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void f_rb_selActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_f_rb_selActionPerformed
-        f_combo_criterion.setEnabled(true);
-        sfsEnableCheckbox.setEnabled(true);
-        f_combo_PCA_LDA.setEnabled(false);
-    }//GEN-LAST:event_f_rb_selActionPerformed
+    private void radioBtn_featureSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBtn_featureSelectionActionPerformed
+        comboBox_feature_criterion.setEnabled(true);
+        checkBox_SFS.setEnabled(true);
+        comboBox_PCA_LDA.setEnabled(false);
+    }//GEN-LAST:event_radioBtn_featureSelectionActionPerformed
 
-    private void f_rb_extrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_f_rb_extrActionPerformed
-        f_combo_criterion.setEnabled(false);
-        sfsEnableCheckbox.setEnabled(false);
-        f_combo_PCA_LDA.setEnabled(true);
-    }//GEN-LAST:event_f_rb_extrActionPerformed
+    private void radioBtn_featureExtractionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBtn_featureExtractionActionPerformed
+        comboBox_feature_criterion.setEnabled(false);
+        checkBox_SFS.setEnabled(false);
+        comboBox_PCA_LDA.setEnabled(true);
+    }//GEN-LAST:event_radioBtn_featureExtractionActionPerformed
 
-    private void b_readActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_readActionPerformed
+    private void btn_readDatasetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_readDatasetActionPerformed
         // reads in a text file; contents is placed into a variable of String type
         InData = readDataSet();
-    }//GEN-LAST:event_b_readActionPerformed
+    }//GEN-LAST:event_btn_readDatasetActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btn_parseDatasetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_parseDatasetActionPerformed
         // Analyze text inputted from a file: determine class number and labels and number
         // of features; build feature matrix: columns - samples, rows - features
         try {
             if(InData!=null) {
                 getDatasetParameters();
-                l_nfeatures.setText(FeatureCount+"");
+                l_numberOfFeatures.setText(FeatureCount+"");
                 fillFeatureMatrix();
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,ex.getMessage());
         }
         
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btn_parseDatasetActionPerformed
 
     private void b_deriveFSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_deriveFSActionPerformed
         // derive optimal feature space
         if(F==null) return;
-        if(f_rb_sel.isSelected()){
+        if(radioBtn_featureSelection.isSelected()){
             // the chosen strategy is feature selection
             int[] flags = new int[FeatureCount];
-            FNew = projectSampleFromFLDValue(selectFeatures(flags,Integer.parseInt((String)selbox_nfeat.getSelectedItem())));
+            FNew = projectSampleFromFLDValue(selectFeatures(flags,Integer.parseInt((String)comboBox_numOfDimensions.getSelectedItem())));
         }
-        else if(f_rb_extr.isSelected()){
-            double TotEnergy=Double.parseDouble(tf_PCA_Energy.getText())/100.0;
+        else if(radioBtn_featureExtraction.isSelected()){
+            double TotEnergy=Double.parseDouble(textField_PCA_Energy.getText())/100.0;
             // Target dimension (if k>0) or flag for energy-based dimension (k=0)
             int k=0;
 //            double[][] FF = { {1,1}, {1,2}};
@@ -478,17 +610,17 @@ public class PR2_GUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_b_deriveFSActionPerformed
 
-    private void b_TrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_TrainActionPerformed
+    private void btn_TrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TrainActionPerformed
         
         // first step: split dataset (in new feature space) into training / testing parts
         if(FNew==null) return; // no reduced feature space have been derived
-        Classifier.ClassifierType which = Classifier.ClassifierType.values()[jComboBox2.getSelectedIndex()];
+        Classifier.ClassifierType which = Classifier.ClassifierType.values()[comboBox_classifier_list.getSelectedIndex()];
         switch(which){
             case NN: 
                 Cl = new NNClassifier();
                 break;
             case kNN:
-                Cl = new kNNClassifier(Integer.parseInt(kValueBox.getText()));
+                Cl = new kNNClassifier(Integer.parseInt(textBox_k_value.getText()));
                 break;
             case NM: 
                 Cl = new NMClassifier();
@@ -497,17 +629,17 @@ public class PR2_GUI extends javax.swing.JFrame {
                 Cl = new kNMClassifier();
                 break;
         }
-        Cl.generateTraining_and_Test_Sets(FNew, tf_TrainSetSize.getText(),ClassLabels);
-        jButton4.setEnabled(true);
-    }//GEN-LAST:event_b_TrainActionPerformed
+        Cl.generateTraining_and_Test_Sets(FNew, textField_TrainSetSize.getText(),ClassLabels);
+        btn_execute_train.setEnabled(true);
+    }//GEN-LAST:event_btn_TrainActionPerformed
 
     private void b_ExecuteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_ExecuteActionPerformed
         if(Cl==null)
             return;
         Classifier.ClassificationResults results = Cl.execute();
-        labelClassAValue.setText(String.format("%d (%d)", results.ClassificationProportions[0], Cl.RealClassLabelsTestSetProportions[0]));
-        labelClassBValue.setText(String.format("%d (%d)", results.ClassificationProportions[1], Cl.RealClassLabelsTestSetProportions[1]));
-        effLabel.setText(String.format("%.0f%%", Cl.efficency(results)*100));
+        l_ClassA_value.setText(String.format("%d (%d)", results.ClassificationProportions[0], Cl.RealClassLabelsTestSetProportions[0]));
+        l_ClassB_value.setText(String.format("%d (%d)", results.ClassificationProportions[1], Cl.RealClassLabelsTestSetProportions[1]));
+        l_eff_value.setText(String.format("%.0f%%", Cl.efficency(results)*100));
     }//GEN-LAST:event_b_ExecuteActionPerformed
 
     /**
@@ -522,74 +654,75 @@ public class PR2_GUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton b_Train;
     private javax.swing.JButton b_deriveFS;
-    private javax.swing.JButton b_read;
-    private javax.swing.JLabel effLabel;
-    private javax.swing.JComboBox f_combo_PCA_LDA;
-    private javax.swing.JComboBox f_combo_criterion;
-    private javax.swing.JRadioButton f_rb_extr;
-    private javax.swing.JRadioButton f_rb_sel;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
+    private javax.swing.JButton btn_Train;
+    private javax.swing.JButton btn_execute_train;
+    private javax.swing.JButton btn_parseDataset;
+    private javax.swing.JButton btn_readDataset;
+    private javax.swing.JCheckBox checkBox_SFS;
+    private javax.swing.JComboBox comboBox_PCA_LDA;
+    private javax.swing.JComboBox comboBox_classifier_list;
+    private javax.swing.JComboBox comboBox_feature_criterion;
+    private javax.swing.JComboBox comboBox_numOfDimensions;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField kValueBox;
-    private javax.swing.JLabel l_FLD_val;
-    private javax.swing.JLabel l_FLD_winner;
+    private javax.swing.JLabel l_ClassA_value;
+    private javax.swing.JLabel l_ClassB_value;
+    private javax.swing.JLabel l_FLD_value;
+    private javax.swing.JLabel l_FLDvalue;
+    private javax.swing.JLabel l_FS_dimension;
+    private javax.swing.JLabel l_FS_winner_value;
+    private javax.swing.JLabel l_FSwinner;
+    private javax.swing.JLabel l_K_equals;
     private javax.swing.JLabel l_NewDim;
+    private javax.swing.JLabel l_classA;
+    private javax.swing.JLabel l_classB;
+    private javax.swing.JLabel l_classes;
+    private javax.swing.JLabel l_classifier;
+    private javax.swing.JLabel l_classifierMethod;
+    private javax.swing.JLabel l_criterion;
+    private javax.swing.JLabel l_datasetInfo_panel;
+    private javax.swing.JLabel l_datasetName;
     private javax.swing.JLabel l_dataset_name;
-    private javax.swing.JLabel l_dataset_name_l;
-    private javax.swing.JLabel l_nfeatures;
-    private javax.swing.JLabel labelAName;
-    private javax.swing.JLabel labelBName;
-    private javax.swing.JLabel labelClassAValue;
-    private javax.swing.JLabel labelClassBValue;
+    private javax.swing.JLabel l_eff;
+    private javax.swing.JLabel l_eff_value;
+    private javax.swing.JLabel l_energy;
+    private javax.swing.JLabel l_featureSpace_panel;
+    private javax.swing.JLabel l_features;
+    private javax.swing.JLabel l_numberOfClasses;
+    private javax.swing.JLabel l_numberOfFeatures;
+    private javax.swing.JLabel l_percent_sign;
+    private javax.swing.JLabel l_trainingPart;
+    private javax.swing.JPanel panel_results;
+    private javax.swing.JRadioButton radioBtn_featureExtraction;
+    private javax.swing.JRadioButton radioBtn_featureSelection;
     private javax.swing.ButtonGroup rbg_F;
-    private javax.swing.JComboBox selbox_nfeat;
-    private javax.swing.JCheckBox sfsEnableCheckbox;
-    private javax.swing.JTextField tf_PCA_Energy;
-    private javax.swing.JTextField tf_TrainSetSize;
+    private javax.swing.JTextField textBox_k_value;
+    private javax.swing.JTextField textField_PCA_Energy;
+    private javax.swing.JTextField textField_TrainSetSize;
     // End of variables declaration//GEN-END:variables
 
     private String readDataSet() {
 
         String s_tmp, s_out="";
-        JFileChooser jfc = new JFileChooser();
-        jfc.setCurrentDirectory(new File("."));
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                                            "Datasets - plain text files", "txt");
-        jfc.setFileFilter(filter);
-        if(jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+//        JFileChooser jfc = new JFileChooser();
+//        jfc.setCurrentDirectory(new File("."));
+//        FileNameExtensionFilter filter = new FileNameExtensionFilter("Datasets - plain text files", "txt");
+//        jfc.setFileFilter(filter);
+//        if(jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             try {
-                BufferedReader br = new BufferedReader(new FileReader(jfc.getSelectedFile()));
+                BufferedReader br = new BufferedReader(new FileReader("./Maple_Oak.txt"));
+//                BufferedReader br = new BufferedReader(new FileReader(jfc.getSelectedFile()));
                 while((s_tmp=br.readLine())!=null) s_out += s_tmp + '$';
                 br.close();
-                l_dataset_name.setText(jfc.getSelectedFile().getName());
+//                l_dataset_name.setText(jfc.getSelectedFile().getName());
+                l_dataset_name.setText("Maple_Oak.txt");
             } catch (Exception e) {        }
-        }
+//        }
         return s_out;
     }
 
@@ -637,8 +770,8 @@ public class PR2_GUI extends javax.swing.JFrame {
         ClassNames = new String[NameList.size()];
         for(int i=0; i<ClassNames.length; i++)
             ClassNames[i]=NameList.get(i);
-        labelAName.setText(ClassNames[0]);
-        labelBName.setText(ClassNames[1]);
+        l_classA.setText(ClassNames[0]);
+        l_classB.setText(ClassNames[1]);
         SampleCount = new int[CountList.size()];
         for(int i=0; i<SampleCount.length; i++)
             SampleCount[i] = CountList.get(i).intValue()+1;
@@ -773,12 +906,12 @@ public class PR2_GUI extends javax.swing.JFrame {
         FLDValue winner;
             long startTime = System.nanoTime();
         winner = d == 1 ? 
-                selectFeature1D() : sfsEnableCheckbox.isSelected() ?
+                selectFeature1D() : checkBox_SFS.isSelected() ?
                     selectFeatureSFS(d) : selectFeatureND(d);
         JOptionPane.showMessageDialog(rootPane, "Time elapsed: "+TimeUnit.MILLISECONDS.convert(System.nanoTime()-startTime,TimeUnit.NANOSECONDS)+"ms","Results", JOptionPane.INFORMATION_MESSAGE);
         Arrays.sort(winner.getIndexes());
-        l_FLD_winner.setText(Arrays.toString(winner.getIndexes())+"");
-        l_FLD_val.setText(Math.round(winner.getValue()*100d)/100d+"");
+        l_FS_winner_value.setText(Arrays.toString(winner.getIndexes())+"");
+        l_FLD_value.setText(Math.round(winner.getValue()*100d)/100d+"");
         return winner;
     }
     
