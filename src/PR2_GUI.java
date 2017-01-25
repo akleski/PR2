@@ -31,6 +31,7 @@ public class PR2_GUI extends javax.swing.JFrame {
 
     String InData; // dataset from a text file will be placed here
     int ClassCount=0, FeatureCount=0;
+    String[] numOfDimensions_list;
     double[][] F, FNew; // original feature matrix and transformed feature matrix
     int[] ClassLabels, SampleCount;
     String[] ClassNames;
@@ -126,6 +127,9 @@ public class PR2_GUI extends javax.swing.JFrame {
         btn_parseDataset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setPreferredSize(new java.awt.Dimension(1280, 357));
+        setSize(new java.awt.Dimension(1024, 768));
 
         btn_readDataset.setText("Read dataset");
         btn_readDataset.addActionListener(new java.awt.event.ActionListener() {
@@ -199,7 +203,13 @@ public class PR2_GUI extends javax.swing.JFrame {
 
         l_FS_dimension.setText("FS Dimension");
 
-        comboBox_numOfDimensions.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5" }));
+        comboBox_numOfDimensions.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0" }));
+        comboBox_numOfDimensions.setEnabled(false);
+        comboBox_numOfDimensions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBox_numOfDimensionsActionPerformed(evt);
+            }
+        });
 
         radioBtn_featureExtraction.setBackground(new java.awt.Color(255, 255, 204));
         rbg_F.add(radioBtn_featureExtraction);
@@ -267,24 +277,20 @@ public class PR2_GUI extends javax.swing.JFrame {
                                     .addComponent(comboBox_feature_criterion, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(l_criterion)))
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                        .addComponent(radioBtn_featureExtraction, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                        .addComponent(l_energy)
-                                        .addGap(16, 16, 16)
-                                        .addComponent(textField_PCA_Energy, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(36, 36, 36)))
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(comboBox_PCA_LDA, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(jLabel15)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(l_NewDim, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addComponent(radioBtn_featureExtraction, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(comboBox_PCA_LDA, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(l_energy)
+                                .addGap(16, 16, 16)
+                                .addComponent(textField_PCA_Energy, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(46, 46, 46)
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(l_NewDim, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -296,7 +302,7 @@ public class PR2_GUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboBox_numOfDimensions, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
+                        .addContainerGap()
                         .addComponent(b_deriveFS, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -322,6 +328,7 @@ public class PR2_GUI extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(radioBtn_featureExtraction)
                     .addComponent(comboBox_PCA_LDA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(l_energy)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -329,7 +336,7 @@ public class PR2_GUI extends javax.swing.JFrame {
                         .addComponent(jLabel14)
                         .addComponent(jLabel15)
                         .addComponent(l_NewDim)))
-                .addGap(10, 10, 10)
+                .addGap(8, 8, 8)
                 .addComponent(b_deriveFS)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -396,7 +403,7 @@ public class PR2_GUI extends javax.swing.JFrame {
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(l_classifierMethod)
                                 .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addComponent(l_classA, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
+                                    .addComponent(l_classA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGap(25, 25, 25))
                                 .addGroup(jPanel4Layout.createSequentialGroup()
                                     .addComponent(l_classB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -426,7 +433,7 @@ public class PR2_GUI extends javax.swing.JFrame {
                         .addComponent(textField_TrainSetSize, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(l_percent_sign, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(97, 97, 97))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -462,18 +469,19 @@ public class PR2_GUI extends javax.swing.JFrame {
                     .addComponent(l_trainingPart)
                     .addComponent(textField_TrainSetSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(l_percent_sign))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         panel_results.setBorder(javax.swing.BorderFactory.createTitledBorder("Results"));
 
         l_FSwinner.setText("FS Winner:");
 
-        l_FS_winner_value.setText("xxx");
+        l_FS_winner_value.setText("[...]");
+        l_FS_winner_value.setAutoscrolls(true);
 
         l_FLDvalue.setText("FLD value: ");
 
-        l_FLD_value.setText("vvv");
+        l_FLD_value.setText("0,0");
 
         javax.swing.GroupLayout panel_resultsLayout = new javax.swing.GroupLayout(panel_results);
         panel_results.setLayout(panel_resultsLayout);
@@ -488,22 +496,22 @@ public class PR2_GUI extends javax.swing.JFrame {
                         .addComponent(l_FLD_value, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panel_resultsLayout.createSequentialGroup()
                         .addComponent(l_FSwinner)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(l_FS_winner_value, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(l_FS_winner_value, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panel_resultsLayout.setVerticalGroup(
             panel_resultsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_resultsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panel_resultsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(l_FSwinner)
-                    .addComponent(l_FS_winner_value))
+                .addComponent(l_FSwinner)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(l_FS_winner_value)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(panel_resultsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(l_FLDvalue)
                     .addComponent(l_FLD_value))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         btn_parseDataset.setText("Parse dataset");
@@ -518,18 +526,22 @@ public class PR2_GUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(111, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
                         .addComponent(btn_readDataset, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_parseDataset, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panel_results, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_parseDataset, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(panel_results, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -541,13 +553,13 @@ public class PR2_GUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btn_readDataset)
                             .addComponent(btn_parseDataset))
-                        .addGap(10, 10, 10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(panel_results, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -579,6 +591,8 @@ public class PR2_GUI extends javax.swing.JFrame {
                 getDatasetParameters();
                 l_numberOfFeatures.setText(FeatureCount+"");
                 fillFeatureMatrix();
+                comboBox_numOfDimensions.setEnabled(true);
+                comboBox_numOfDimensions.setModel(new javax.swing.DefaultComboBoxModel(numOfDimensions_list));
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,ex.getMessage());
@@ -641,6 +655,10 @@ public class PR2_GUI extends javax.swing.JFrame {
         l_ClassB_value.setText(String.format("%d (%d)", results.ClassificationProportions[1], Cl.RealClassLabelsTestSetProportions[1]));
         l_eff_value.setText(String.format("%.0f%%", Cl.efficency(results)*100));
     }//GEN-LAST:event_b_ExecuteActionPerformed
+
+    private void comboBox_numOfDimensionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBox_numOfDimensionsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBox_numOfDimensionsActionPerformed
 
     /**
     * @param args the command line arguments
@@ -741,6 +759,11 @@ public class PR2_GUI extends javax.swing.JFrame {
             count++;
         }
         FeatureCount = count+1; // the first parameter
+        numOfDimensions_list = new String[FeatureCount];
+        for (int i = 0; i < FeatureCount; i++)
+            numOfDimensions_list[i] = Integer.toString(i+1);
+            
+        
         // Determine number of classes, class names and number of samples per class
         boolean New;
         int index=-1;
@@ -770,6 +793,7 @@ public class PR2_GUI extends javax.swing.JFrame {
         ClassNames = new String[NameList.size()];
         for(int i=0; i<ClassNames.length; i++)
             ClassNames[i]=NameList.get(i);
+        l_numberOfClasses.setText(Integer.toString(ClassNames.length));
         l_classA.setText(ClassNames[0]);
         l_classB.setText(ClassNames[1]);
         SampleCount = new int[CountList.size()];
