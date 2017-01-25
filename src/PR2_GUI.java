@@ -765,7 +765,7 @@ public class PR2_GUI extends javax.swing.JFrame {
             
         
         // Determine number of classes, class names and number of samples per class
-        boolean New;
+        boolean New; 
         int index=-1;
         List<String> NameList = new ArrayList<String>();
         List<Integer> CountList = new ArrayList<Integer>();
