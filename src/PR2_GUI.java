@@ -587,7 +587,7 @@ public class PR2_GUI extends javax.swing.JFrame {
         // of features; build feature matrix: columns - samples, rows - features
         try {
             if(InData!=null) {
-                getDatasetParameters();
+                getDatasetParameters();//TODO wprintuj, tak jak u janka
                 l_numberOfFeatures.setText(FeatureCount+"");
                 fillFeatureMatrix();
                 comboBox_numOfDimensions.setEnabled(true);
@@ -607,7 +607,7 @@ public class PR2_GUI extends javax.swing.JFrame {
             int[] flags = new int[FeatureCount];
             FNew = projectSampleFromFLDValue(selectFeatures(flags,Integer.parseInt((String)comboBox_numOfDimensions.getSelectedItem())));
         }
-        else if(radioBtn_featureExtraction.isSelected()){
+        else if(radioBtn_featureExtraction.isSelected()){//TODO do usniecia, cale PCA i featureExtraction
             double TotEnergy=Double.parseDouble(textField_PCA_Energy.getText())/100.0;
             // Target dimension (if k>0) or flag for energy-based dimension (k=0)
             int k=0;
@@ -810,8 +810,8 @@ public class PR2_GUI extends javax.swing.JFrame {
         for(int i=0; i<SampleCount.length; i++)
             n += SampleCount[i];
         if(n<=0) throw new Exception("no samples found");
-        F = new double[FeatureCount][n]; // samples are placed column-wise
-        for(int j=0; j<n; j++){
+        F = new double[FeatureCount][n]; // samples are placed column-wise, ie: features are placed in column 
+        for(int j=0; j<n; j++){//transponowanie dataset, tj: wiersze = cechy, kolumny = probki
             saux = stmp.substring(0,stmp.indexOf('$'));
             saux = saux.substring(stmp.indexOf(',')+1);
             for(int i=0; i<FeatureCount-1; i++) {
@@ -859,7 +859,7 @@ public class PR2_GUI extends javax.swing.JFrame {
         return nextCombination;
     }
 
-    private FLDValue selectFeature1D() {
+    private FLDValue selectFeature1D() {//FisherLineaarDsiscriminant for 1 dimension -> slajd 10
         double FLD=0, tmp;
         int max_ind=-1;        
         for(int i=0; i<FeatureCount; i++){
@@ -872,13 +872,11 @@ public class PR2_GUI extends javax.swing.JFrame {
     }
     private FLDValue selectFeatureND(int d) {
         double FLD=0, tmp;
-        int tries = 0;
         int[] max_ind = new int[d];
         Arrays.fill(max_ind, -1);
         int[] combination = range(0,d); // prepare to make combination without repetitions
 
         do {
-            ++tries;
             double[][] matrix = new double[d][F[0].length];
             for(int i = 0; i < d; i++) {
                 matrix[i] = Arrays.copyOf(F[combination[i]], F[combination[i]].length);
