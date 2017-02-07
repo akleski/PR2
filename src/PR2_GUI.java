@@ -810,7 +810,7 @@ public class PR2_GUI extends javax.swing.JFrame {
         for(int i=0; i<SampleCount.length; i++)
             n += SampleCount[i];
         if(n<=0) throw new Exception("no samples found");
-        F = new double[FeatureCount][n]; // samples are placed column-wise, ie: features are placed in column 
+        F = new double[FeatureCount][n]; 
         for(int j=0; j<n; j++){//transponowanie dataset, tj: wiersze = cechy, kolumny = probki
             saux = stmp.substring(0,stmp.indexOf('$'));
             saux = saux.substring(stmp.indexOf(',')+1);
@@ -824,11 +824,11 @@ public class PR2_GUI extends javax.swing.JFrame {
         int cc = 1;
     }
     
-    private int[] range(int start, int end) {
+    private int[] range(int start, int end) { //range(0,d)
         int rangeLength = end-start;
         int[] result = new int[rangeLength];
         for(int i = 0; i < rangeLength; i++){
-            result[i] = start + i;
+            result[i] = start + i; //0,1 dla d=2
         }
         return result;
     }
@@ -870,21 +870,24 @@ public class PR2_GUI extends javax.swing.JFrame {
         }
         return new FLDValue(max_ind,FLD);
     }
-    private FLDValue selectFeatureND(int d) {
+    private FLDValue selectFeatureND(int d) {//d - FS Dimension czyli wybrana ilosc cech z comboboxa
         double FLD=0, tmp;
         int[] max_ind = new int[d];
         Arrays.fill(max_ind, -1);
         int[] combination = range(0,d); // prepare to make combination without repetitions
-
+//dla d=2 -> combination[0, 1]
         do {
             double[][] matrix = new double[d][F[0].length];
+            System.out.println("F[0].length = " + F[0].length);
             for(int i = 0; i < d; i++) {
-                matrix[i] = Arrays.copyOf(F[combination[i]], F[combination[i]].length);
+                System.out.println(Arrays.toString(F[combination[i]]));
+                matrix[i] = Arrays.copyOf( F[combination[i]], F[combination[i]].length );
             }
             if((tmp = computeFisherLD(matrix, d))>FLD) {
                 FLD = tmp;
                 max_ind = combination;
             }
+            break;
         }while((combination = nextCombination(combination, d, FeatureCount-1)).length >= d);
         return new FLDValue(max_ind, FLD);
     }
@@ -938,45 +941,54 @@ public class PR2_GUI extends javax.swing.JFrame {
     
     /**
      * Compute Fisher for d > 1
-     * @param vec matrix with samples
+     * @param vec matrix with samples (rows = cecha, cols=probka)
      * @return computed fisher value
      */
-    private double computeFisherLD(double[][] vec, int d) {
+    private double computeFisherLD(double[][] vec, int d) { //wzór na obl współ Fiszera dla n-Dim, slajd 13 2-Selekcja.pdf (tylko to na żółtym tle, chyba?)
         double[] mA = new double[d], mB = new double[d], mDif = new double[d];
         double[][] mAHelper = new double[d][SampleCount[0]], mBHelper = new double[d][SampleCount[1]];
         double[][] sA = new double[d][SampleCount[0]], sB =new double[d][SampleCount[1]];
         int k,m;
-        for(int f = 0; f < d; f++) {
+        System.out.println("ClassLables="+Arrays.toString(ClassLabels));
+                
+        for(int f = 0; f < d; f++) {//f=feature rows
             k=0;m=0;
-            for(int i =0, l = vec[f].length; i < l; i++){
+            for(int i =0, l = vec[f].length; i < l; i++){//TODO spytać adraina czemu jest pomocncza zmienna 'l'
                 if(ClassLabels[i]==0){
+                    System.out.println("vec[f="+f+"][i="+i+"] ====== "+ vec[f][i]);
                     sA[f][k] = vec[f][i];
-                    mA[f] += sA[f][k++];
+                    mA[f] += sA[f][k++]; //mA srednia
+                    System.out.println("mA[f="+f+"] ====== "+ mA[f]); //TODO adrian: czy nie da rady prosciej?
                 }
                 else {
                     sB[f][m] = vec[f][i];
                     mB[f] += sB[f][m++];
                 }
             }
+            
             mA[f] /= SampleCount[0];
             Arrays.fill(mAHelper[f], mA[f]);
             mB[f] /= SampleCount[1];
             Arrays.fill(mBHelper[f], mB[f]);
             mDif[f] = mA[f] - mB[f];
+            System.out.println("mA[f="+f+"] == " + mA[f]);
+            System.out.println("mB[f="+f+"] == " + mB[f]);
+            System.out.println("mDif[f="+f+"] == " +mDif[f]);
         }
-        Matrix sAMatrix = (new Matrix(sA)).minus(new Matrix(mAHelper));
+        
+        Matrix sAMatrix = (new Matrix(sA)).minus(new Matrix(mAHelper)); //TODO sAmatrix = macierz rozrzutu (czy może kowariancji??) obiektów klasy A
         sAMatrix = sAMatrix.times(sAMatrix.transpose());
         Matrix sBMatrix = (new Matrix(sB)).minus(new Matrix(mBHelper));
         sBMatrix = sBMatrix.times(sBMatrix.transpose());
         double mSumModule = 0;
-        for(double tmp : mDif) {
+        for(double tmp : mDif) { //TODO start from here, we finished lastly
             mSumModule += tmp*tmp;
         }
         return Math.sqrt(mSumModule)/(sAMatrix.det()+sBMatrix.det());
     }
     
     
-    private double computeFisherLD(double[] vec) {
+    private double computeFisherLD(double[] vec) { //FisherLineaarDsiscriminant for 1 dimension -> slajd 10 wyk 2-selekcja.pdf (selekcja cech w przestdzeni 1Dimension)
         // 1D, 2-classes
         double mA=0, mB=0, sA=0, sB=0;
         for(int i=0; i<vec.length; i++){
