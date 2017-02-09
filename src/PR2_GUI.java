@@ -833,13 +833,19 @@ public class PR2_GUI extends javax.swing.JFrame {
         return result;
     }
     
-    private int[] nextCombination(int[] combination, int k, int n){
-        int currentIndex = k - 1;
-        int maxValue = n;
+    private int[] nextCombination(int[] combination, int dim, int featCount){
+        System.out.println("1st input combination = " + Arrays.toString(combination));
+        int currentIndex = dim - 1;
+        int maxValue = featCount;
         int[] nextCombination = Arrays.copyOf(combination, combination.length);
-        while(currentIndex >= 0){
+        
+        while(currentIndex >= 0) {
             if(nextCombination[currentIndex] < maxValue){
+                System.out.println("nextComboFunction inside IF (nextCombination[currentIndex] < maxValue)");
+                System.out.println("pre++ NexCombination[currentIndex="+ currentIndex + "] = " + nextCombination[currentIndex]);
                 nextCombination[currentIndex]++;
+                System.out.println("post++ NexCombination[currentIndex="+ currentIndex + "] = " + nextCombination[currentIndex]);
+
                 currentIndex = -1;
             }
             else {
@@ -847,13 +853,13 @@ public class PR2_GUI extends javax.swing.JFrame {
                 --maxValue;
                 if(currentIndex >= 0 && nextCombination[currentIndex+1]-nextCombination[currentIndex] > 1){
                     int incrementValue = nextCombination[currentIndex] + 2;
-                    for(int i = currentIndex+1; i < k; i++){
+                    for(int i = currentIndex+1; i < dim; i++){
                         nextCombination[i] = incrementValue++;
                     }
                 }
             }
         }
-        if(maxValue == n - k){
+        if(maxValue == featCount - dim){
             return new int[0];
         }
         return nextCombination;
@@ -875,6 +881,8 @@ public class PR2_GUI extends javax.swing.JFrame {
         int[] max_ind = new int[d];
         Arrays.fill(max_ind, -1);
         int[] combination = range(0,d); // prepare to make combination without repetitions
+        System.out.println("selectFeatureND combination = " + Arrays.toString(combination));
+                
 //dla d=2 -> combination[0, 1]
         do {
             double[][] matrix = new double[d][F[0].length];
@@ -887,17 +895,20 @@ public class PR2_GUI extends javax.swing.JFrame {
                 FLD = tmp;
                 max_ind = combination;
             }
-            break;
-        }while((combination = nextCombination(combination, d, FeatureCount-1)).length >= d);
+            System.out.println("before nextCombination(), combination = " + Arrays.toString(combination));
+            combination = nextCombination(combination, d, FeatureCount-1);
+            System.out.println("AFTER nextCombination(), combination = " + Arrays.toString(combination));
+            System.out.println("combination.length = " + combination.length);
+        } while( combination.length >= d);//ten do..while oblicza computeFisherLD każdej kombinacji cech i zwraca najwieksza z nich
         return new FLDValue(max_ind, FLD);
     }
     
-    private FLDValue selectFeatureSFS(int d){
+    private FLDValue selectFeatureSFS(int dim){
         int tmpD = 1;
         double FLD=0,tmp;
         Integer max_ind = -1;
-        FLDValue result = selectFeature1D();
-        int[] combination = new int[d];
+        FLDValue result = selectFeature1D();//TODO baza wynik wspol fiszhera dla 1-go wymiaru
+        int[] combination = new int[dim];
         combination[0] = result.getIndexes()[0];
         Set<Integer> leftIndexes = new HashSet<Integer>(FeatureCount-1);
         for(int e: range(0,FeatureCount)){
@@ -905,11 +916,11 @@ public class PR2_GUI extends javax.swing.JFrame {
                 leftIndexes.add(e);
             }
         }
-        while(++tmpD <= d){
+        while(++tmpD <= dim){
             for(Integer e: leftIndexes){
                 combination[tmpD-1]= e;
                 //
-                double[][] matrix = new double[d][F[0].length];
+                double[][] matrix = new double[dim][F[0].length];
                 for(int i = 0; i < tmpD; i++) {
                     matrix[i] = Arrays.copyOf(F[combination[i]], F[combination[i]].length);
                 }
@@ -926,13 +937,13 @@ public class PR2_GUI extends javax.swing.JFrame {
         return result;
     }
     
-    private FLDValue selectFeatures(int[] flags, int d) {
+    private FLDValue selectFeatures(int[] flags, int dim) {
         FLDValue winner;
             long startTime = System.nanoTime();
-        winner = d == 1 ? 
+        winner = dim == 1 ? 
                 selectFeature1D() : checkBox_SFS.isSelected() ?
-                    selectFeatureSFS(d) : selectFeatureND(d);
-        JOptionPane.showMessageDialog(rootPane, "Time elapsed: "+TimeUnit.MILLISECONDS.convert(System.nanoTime()-startTime,TimeUnit.NANOSECONDS)+"ms","Results", JOptionPane.INFORMATION_MESSAGE);
+                    selectFeatureSFS(dim) : selectFeatureND(dim);
+        //JOptionPane.showMessageDialog(rootPane, "Time elapsed: "+TimeUnit.MILLISECONDS.convert(System.nanoTime()-startTime,TimeUnit.NANOSECONDS)+"ms","Results", JOptionPane.INFORMATION_MESSAGE);
         Arrays.sort(winner.getIndexes());
         l_FS_winner_value.setText(Arrays.toString(winner.getIndexes())+"");
         l_FLD_value.setText(Math.round(winner.getValue()*100d)/100d+"");
@@ -944,21 +955,21 @@ public class PR2_GUI extends javax.swing.JFrame {
      * @param vec matrix with samples (rows = cecha, cols=probka)
      * @return computed fisher value
      */
-    private double computeFisherLD(double[][] vec, int d) { //wzór na obl współ Fiszera dla n-Dim, slajd 13 2-Selekcja.pdf (tylko to na żółtym tle, chyba?)
-        double[] mA = new double[d], mB = new double[d], mDif = new double[d];
-        double[][] mAHelper = new double[d][SampleCount[0]], mBHelper = new double[d][SampleCount[1]];
-        double[][] sA = new double[d][SampleCount[0]], sB =new double[d][SampleCount[1]];
+    private double computeFisherLD(double[][] vec, int dim) { //zwraca wartosc wspol fiszera, wedlug wzór na obl współ Fiszera dla n-Dim, slajd 13 2-Selekcja.pdf (tylko to na żółtym tle.
+        double[] mA = new double[dim], mB = new double[dim], mDifference =  new double[dim];
+        double[][] mAHelper = new double[dim][SampleCount[0]], mBHelper = new double[dim][SampleCount[1]];
+        double[][] sA = new double[dim][SampleCount[0]], sB =new double[dim][SampleCount[1]];
         int k,m;
         System.out.println("ClassLables="+Arrays.toString(ClassLabels));
                 
-        for(int f = 0; f < d; f++) {//f=feature rows
+        for(int f = 0; f < dim; f++) {//f=feature rows
             k=0;m=0;
-            for(int i =0, l = vec[f].length; i < l; i++){//TODO spytać adraina czemu jest pomocncza zmienna 'l'
+            for(int i =0; i < vec[f].length; i++){//TODO spytać adraina czemu jest pomocncza zmienna 'l'
                 if(ClassLabels[i]==0){
-                    System.out.println("vec[f="+f+"][i="+i+"] ====== "+ vec[f][i]);
+//                    System.out.println("vec[f="+f+"][i="+i+"] ====== "+ vec[f][i]);
                     sA[f][k] = vec[f][i];
                     mA[f] += sA[f][k++]; //mA srednia
-                    System.out.println("mA[f="+f+"] ====== "+ mA[f]); //TODO adrian: czy nie da rady prosciej?
+//                    System.out.println("mA[f="+f+"] ====== "+ mA[f]); //TODO adrian: czy nie da rady prosciej?
                 }
                 else {
                     sB[f][m] = vec[f][i];
@@ -970,21 +981,23 @@ public class PR2_GUI extends javax.swing.JFrame {
             Arrays.fill(mAHelper[f], mA[f]);
             mB[f] /= SampleCount[1];
             Arrays.fill(mBHelper[f], mB[f]);
-            mDif[f] = mA[f] - mB[f];
-            System.out.println("mA[f="+f+"] == " + mA[f]);
-            System.out.println("mB[f="+f+"] == " + mB[f]);
-            System.out.println("mDif[f="+f+"] == " +mDif[f]);
+            mDifference[f] = mA[f] - mB[f];
+//            System.out.println("mA[f="+f+"] == " + mA[f]);
+//            System.out.println("mB[f="+f+"] == " + mB[f]);
+//            System.out.println("mDif[f="+f+"] == " +mDif[f]);
         }
         
-        Matrix sAMatrix = (new Matrix(sA)).minus(new Matrix(mAHelper)); //TODO sAmatrix = macierz rozrzutu (czy może kowariancji??) obiektów klasy A
-        sAMatrix = sAMatrix.times(sAMatrix.transpose());
+        Matrix sAMatrix = (new Matrix(sA)).minus(new Matrix(mAHelper));
+        sAMatrix = sAMatrix.times(sAMatrix.transpose()); //macierz rozrzutu klasy A
+        
         Matrix sBMatrix = (new Matrix(sB)).minus(new Matrix(mBHelper));
         sBMatrix = sBMatrix.times(sBMatrix.transpose());
+        
         double mSumModule = 0;
-        for(double tmp : mDif) { //TODO start from here, we finished lastly
-            mSumModule += tmp*tmp;
+        for(double tmp : mDifference) { //wzór, licznik --->  || mA - mB || 
+            mSumModule += tmp*tmp; //TODO jak sie nazywaja te  4 kreski- sprwadz!
         }
-        return Math.sqrt(mSumModule)/(sAMatrix.det()+sBMatrix.det());
+        return Math.sqrt(mSumModule)/(sAMatrix.det()+sBMatrix.det()); //wzór slajd 13, 2-seleckaj.pdf
     }
     
     
