@@ -5,6 +5,7 @@ import java.util.List;
 import javax.swing.*;
 import Jama.*;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.PriorityQueue;
@@ -677,7 +678,7 @@ public class PR2_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_b_ExecuteActionPerformed
 
     private void comboBox_numOfDimensionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBox_numOfDimensionsActionPerformed
-        
+
     }//GEN-LAST:event_comboBox_numOfDimensionsActionPerformed
 
     /**
@@ -870,7 +871,7 @@ public class PR2_GUI extends javax.swing.JFrame {
         int rangeLength = end - start;
         int[] result = new int[rangeLength];
         for (int i = 0; i < rangeLength; i++) {
-            result[i] = start + i; //0,1 dla d=2
+            result[i] = start + i; //0,1 dla dim=2
         }
         return result;
     }
@@ -944,37 +945,52 @@ public class PR2_GUI extends javax.swing.JFrame {
         } while (combination.length >= d);//ten do..while oblicza computeFisherLD każdej kombinacji cech i zwraca najwieksza z nich
         return new FLDValue(max_ind, FLD);
     }
-
+/**
+ * dzięki coraz mniejszym leftIndexes (numery wierszow cechy) w kolejnych iteracjach wymiarow 
+ * mamy coraz mniej cech do sprawdzenia, bo w SFS greedy search znajduje 
+ * najlepsze cechy, ktore pozniej nie sa juz brane do obliczen (sa usuwane z leftIndexes)
+ * 
+ * @param dim
+ * @return 
+ */
     private FLDValue selectFeatureSFS(int dim) {
         int tmpD = 1;
         double FLD = 0, tmp;
         Integer max_ind = -1;
-        FLDValue result = selectFeature1D();//TODO TU SKONCZYLISMY - result jest baza/wynikiem wspol fiszhera dla 1-go wymiaru
+        FLDValue result = selectFeature1D();//result jest baza/wynikiem wspol fiszhera dla 1-go wymiaru
         int[] combination = new int[dim];
         combination[0] = result.getIndexes()[0];
         Set<Integer> leftIndexes = new HashSet<Integer>(FeatureCount - 1);
-        for (int e : range(0, FeatureCount)) {
+        for (int e : range(0, FeatureCount)) { //0,1,...,63
             if (combination[0] != e) {
                 leftIndexes.add(e);
             }
         }
+        System.out.println("combination[] = " + Arrays.toString(combination));
+        System.out.println("leftIndexes = " + Arrays.toString(leftIndexes.toArray()));
+        System.out.println("");
         while (++tmpD <= dim) {
+            System.out.println("while::tmpD=" + tmpD);
             for (Integer e : leftIndexes) {
-                combination[tmpD - 1] = e;
-                //
+                combination[tmpD - 1] = e; //
+                System.out.println("while::for1::combination[] = " + Arrays.toString(combination));
+
                 double[][] matrix = new double[dim][F[0].length];
                 for (int i = 0; i < tmpD; i++) {
+                    System.out.println("while::for2:wstawiaDOmatrixa=" + Arrays.toString(F[combination[i]]));
                     matrix[i] = Arrays.copyOf(F[combination[i]], F[combination[i]].length);
                 }
                 if ((tmp = computeFisherLD(matrix, tmpD)) > FLD) {
                     FLD = tmp;
                     max_ind = e;
                     result = new FLDValue(combination.clone(), FLD);
+                    
                 }
-                //
             }
             combination = result.getIndexes().clone();
+            System.out.println("before::leftIndexes.remove mamy max_ind="+max_ind);
             leftIndexes.remove(max_ind);
+            System.out.println("new leftIndexes = " + Arrays.toString(leftIndexes.toArray()));
         }
         return result;
     }
@@ -993,7 +1009,7 @@ public class PR2_GUI extends javax.swing.JFrame {
     }
 
     /**
-     * Compute Fisher for d > 1
+     * Compute Fisher for d > 1, formula for n-dimensions
      *
      * @param vec matrix with samples (rows = cecha, cols=probka)
      * @return computed fisher value
@@ -1003,7 +1019,7 @@ public class PR2_GUI extends javax.swing.JFrame {
         double[][] mAHelper = new double[dim][SampleCount[0]], mBHelper = new double[dim][SampleCount[1]];
         double[][] sA = new double[dim][SampleCount[0]], sB = new double[dim][SampleCount[1]];
         int k, m;
-        System.out.println("ClassLables=" + Arrays.toString(ClassLabels));
+        //System.out.println("ClassLables=" + Arrays.toString(ClassLabels));
 
         for (int f = 0; f < dim; f++) {//f=feature rows
             k = 0;
@@ -1038,7 +1054,7 @@ public class PR2_GUI extends javax.swing.JFrame {
 
         double mSumModule = 0;
         for (double tmp : mDifference) { //wzór, licznik --->  || mA - mB || 
-            mSumModule += tmp * tmp; //TODO jak sie nazywaja te  4 kreski- sprwadz!
+            mSumModule += tmp * tmp;
         }
         return Math.sqrt(mSumModule) / (sAMatrix.det() + sBMatrix.det()); //wzór slajd 13, 2-seleckaj.pdf
     }
