@@ -351,6 +351,11 @@ public class PR2_GUI extends javax.swing.JFrame {
         l_classifierMethod.setText("Method");
 
         comboBox_classifier_list.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Nearest neighbor (NN)", "Nearest Mean (NM)", "k-Nearest Neighbor (k-NN)", "k-Nearest Mean (k-NM)" }));
+        comboBox_classifier_list.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBox_classifier_listActionPerformed(evt);
+            }
+        });
 
         btn_Train.setText("Train");
         btn_Train.addActionListener(new java.awt.event.ActionListener() {
@@ -626,7 +631,16 @@ public class PR2_GUI extends javax.swing.JFrame {
             // the chosen strategy is feature selection
             int[] flags = new int[FeatureCount];
             FNew = projectSampleFromFLDValue(selectFeatures(flags, Integer.parseInt((String) comboBox_numOfDimensions.getSelectedItem())));
-        } else if (radioBtn_featureExtraction.isSelected()) {
+            System.out.println("");
+            //System.out.println("FNew[][]="+Arrays.deepToString(F));//ugly print
+            System.out.println("FNew = ");
+            String[][] split = new String[1][FeatureCount];
+            split[0] = (Arrays.deepToString(FNew)).split(Pattern.quote("], [")); //split at the comma
+            for (int row = 0; row < Integer.parseInt((String) comboBox_numOfDimensions.getSelectedItem()); row++) {
+                System.out.println(split[0][row]);
+            }
+
+        } else if (radioBtn_featureExtraction.isSelected()) {//pca not used
             double TotEnergy = Double.parseDouble(textField_PCA_Energy.getText()) / 100.0;
             // Target dimension (if k>0) or flag for energy-based dimension (k=0)
             int k = 0;
@@ -648,8 +662,8 @@ public class PR2_GUI extends javax.swing.JFrame {
         if (FNew == null) {
             return; // no reduced feature space have been derived
         }
-        Classifier.ClassifierType which = Classifier.ClassifierType.values()[comboBox_classifier_list.getSelectedIndex()];
-        switch (which) {
+        Classifier.ClassifierType selectedClassifierType = Classifier.ClassifierType.values()[comboBox_classifier_list.getSelectedIndex()];
+        switch (selectedClassifierType) {
             case NN:
                 Cl = new NNClassifier();
                 break;
@@ -680,6 +694,10 @@ public class PR2_GUI extends javax.swing.JFrame {
     private void comboBox_numOfDimensionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBox_numOfDimensionsActionPerformed
 
     }//GEN-LAST:event_comboBox_numOfDimensionsActionPerformed
+
+    private void comboBox_classifier_listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBox_classifier_listActionPerformed
+
+    }//GEN-LAST:event_comboBox_classifier_listActionPerformed
 
     /**
      * @param args the command line arguments
@@ -924,12 +942,12 @@ public class PR2_GUI extends javax.swing.JFrame {
         int[] max_ind = new int[d];
         Arrays.fill(max_ind, -1);
         int[] combination = range(0, d); // prepare to make combination without repetitions
-        System.out.println("selectFeatureND combination = " + Arrays.toString(combination));
+        //System.out.println("selectFeatureND combination = " + Arrays.toString(combination));
 
 //dla d=2 -> combination[0, 1]
         do {
             double[][] matrix = new double[d][F[0].length];
-            System.out.println("F[0].length = " + F[0].length);
+            //System.out.println("F[0].length = " + F[0].length);
             for (int i = 0; i < d; i++) {
                 System.out.println(Arrays.toString(F[combination[i]]));
                 matrix[i] = Arrays.copyOf(F[combination[i]], F[combination[i]].length);
@@ -938,21 +956,23 @@ public class PR2_GUI extends javax.swing.JFrame {
                 FLD = tmp;
                 max_ind = combination;
             }
-            System.out.println("before nextCombination(), combination = " + Arrays.toString(combination));
+            //System.out.println("before nextCombination(), combination = " + Arrays.toString(combination));
             combination = nextCombination(combination, d, FeatureCount - 1);
-            System.out.println("AFTER nextCombination(), combination = " + Arrays.toString(combination));
-            System.out.println("combination.length = " + combination.length);
+            //System.out.println("AFTER nextCombination(), combination = " + Arrays.toString(combination));
+            //System.out.println("combination.length = " + combination.length);
         } while (combination.length >= d);//ten do..while oblicza computeFisherLD każdej kombinacji cech i zwraca najwieksza z nich
         return new FLDValue(max_ind, FLD);
     }
-/**
- * dzięki coraz mniejszym leftIndexes (numery wierszow cechy) w kolejnych iteracjach wymiarow 
- * mamy coraz mniej cech do sprawdzenia, bo w SFS greedy search znajduje 
- * najlepsze cechy, ktore pozniej nie sa juz brane do obliczen (sa usuwane z leftIndexes)
- * 
- * @param dim
- * @return 
- */
+
+    /**
+     * dzięki coraz mniejszym leftIndexes (numery wierszow cechy) w kolejnych
+     * iteracjach wymiarow mamy coraz mniej cech do sprawdzenia, bo w SFS greedy
+     * search znajduje najlepsze cechy, ktore pozniej nie sa juz brane do
+     * obliczen (sa usuwane z leftIndexes)
+     *
+     * @param dim
+     * @return
+     */
     private FLDValue selectFeatureSFS(int dim) {
         int tmpD = 1;
         double FLD = 0, tmp;
@@ -966,31 +986,33 @@ public class PR2_GUI extends javax.swing.JFrame {
                 leftIndexes.add(e);
             }
         }
-        System.out.println("combination[] = " + Arrays.toString(combination));
-        System.out.println("leftIndexes = " + Arrays.toString(leftIndexes.toArray()));
-        System.out.println("");
+        //System.out.println("combination[] = " + Arrays.toString(combination));
+        //System.out.println("leftIndexes = " + Arrays.toString(leftIndexes.toArray()));
+        //System.out.println("");
         while (++tmpD <= dim) {
-            System.out.println("while::tmpD=" + tmpD);
+            //System.out.println("while::tmpD=" + tmpD);
             for (Integer e : leftIndexes) {
                 combination[tmpD - 1] = e; //
-                System.out.println("while::for1::combination[] = " + Arrays.toString(combination));
+                // System.out.println("while:::for1:e="+e.toString()+":combination[] = " + Arrays.toString(combination));
 
                 double[][] matrix = new double[dim][F[0].length];
                 for (int i = 0; i < tmpD; i++) {
-                    System.out.println("while::for2:wstawiaDOmatrixa=" + Arrays.toString(F[combination[i]]));
+                    //System.out.println("while::for2:wstawiaDOmatrixa=" + Arrays.toString(F[combination[i]]));
                     matrix[i] = Arrays.copyOf(F[combination[i]], F[combination[i]].length);
                 }
                 if ((tmp = computeFisherLD(matrix, tmpD)) > FLD) {
+                    //System.out.println("SFS found bigger FLD value, ie ="+tmp);
+                    //System.out.println("winning combination = " + Arrays.toString(combination));
                     FLD = tmp;
                     max_ind = e;
                     result = new FLDValue(combination.clone(), FLD);
-                    
+                    //System.out.println("");
                 }
             }
             combination = result.getIndexes().clone();
-            System.out.println("before::leftIndexes.remove mamy max_ind="+max_ind);
+            //System.out.println("before::leftIndexes.remove mamy max_ind="+max_ind);
             leftIndexes.remove(max_ind);
-            System.out.println("new leftIndexes = " + Arrays.toString(leftIndexes.toArray()));
+            //System.out.println("new leftIndexes = " + Arrays.toString(leftIndexes.toArray()));
         }
         return result;
     }
@@ -1189,7 +1211,7 @@ abstract class Classifier {
 
     public double efficency(ClassificationResults classificationResult) {
         int suma = 0;
-        for (int i = 0, l = classificationResult.ClassificationList.length; i < l; i++) {
+        for (int i = 0, l = classificationResult.ClassificationList.length; i < l; i++) {//TODO znowu zmienna 'l' ...
             if (classificationResult.ClassificationList[i] == this.OrigTestClassLabels[i]) {
                 suma++;
             }
@@ -1200,29 +1222,40 @@ abstract class Classifier {
     void generateTraining_and_Test_Sets(double[][] Dataset, String TrainSetSize, int[] OriginalClassLabels) {
         int[] Index = new int[Dataset[0].length];
         double Th = Double.parseDouble(TrainSetSize) / 100.0;
-        int TrainCount = 0, TestCount = 0;
-        List<Integer> classLabelsTmp = new ArrayList<Integer>();
-        List<Integer> classLabelsTmpTest = new ArrayList<Integer>();
+        int TrainCount = 0;
+        int TestCount = 0;
+        List<Integer> classLabelsTmpTrainSet = new ArrayList<Integer>();
+        List<Integer> classLabelsTmpTestSet = new ArrayList<Integer>();
+
         for (int i = 0; i < Dataset[0].length; i++) {
             if (Math.random() <= Th) {
                 Index[i] = TRAIN_SET;
                 TrainCount++;
-                classLabelsTmp.add(OriginalClassLabels[i]);
+                classLabelsTmpTrainSet.add(OriginalClassLabels[i]);
             } else {
                 Index[i] = TEST_SET;
                 TestCount++;
-                classLabelsTmpTest.add(OriginalClassLabels[i]);
+                classLabelsTmpTestSet.add(OriginalClassLabels[i]);
                 RealClassLabelsTestSetProportions[OriginalClassLabels[i]]++;
             }
         }
+
+        System.out.println("RealClassLabelsTestSetProportions = " + Arrays.toString(RealClassLabelsTestSetProportions));
+        System.out.println("Index = " + Arrays.toString(Index));
+
         TrainingSet = new double[Dataset.length][TrainCount];
         TestSet = new double[Dataset.length][TestCount];
-        ClassLabels = classLabelsTmp.toArray(new Integer[TrainCount]);
-        OrigTestClassLabels = classLabelsTmpTest.toArray(new Integer[TestCount]);
+
+        ClassLabels = classLabelsTmpTrainSet.toArray(new Integer[TrainCount]);
+        System.out.println("ClassLabels = " + Arrays.toString(ClassLabels));
+        
+        OrigTestClassLabels = classLabelsTmpTestSet.toArray(new Integer[TestCount]);
+        System.out.println("OrigTestClassLabels = " + Arrays.toString(OrigTestClassLabels));
+        
         TrainCount = 0;
         TestCount = 0;
-        // label vectors for training/test sets
-        for (int i = 0; i < Dataset.length; i++) {
+        // label vectors for training/test sets?? imo, wpisanie do TrainingSet i TestSet wybranych podzbiorów cech/probek
+        for (int i = 0; i < Dataset.length; i++) { //dataset.length tyle co w FS dimension
             for (int j = 0; j < Dataset[i].length; j++) {
                 if (Index[j] == TRAIN_SET) {
                     TrainingSet[i][TrainCount++] = Dataset[i][j];
@@ -1233,6 +1266,21 @@ abstract class Classifier {
             TrainCount = 0;
             TestCount = 0;
         }
+//        System.out.println("TrainingSet = " + Arrays.deepToString(TrainingSet)); //ugly print
+        System.out.println("TrainingSet = ");
+        String[][] split = new String[1][Dataset.length];
+        split[0] = (Arrays.deepToString(TrainingSet)).split(Pattern.quote("], [")); //split at the comma
+        for (int row = 0; row < Dataset.length; row++) {
+            System.out.println(split[0][row]);
+        }
+//        System.out.println("TestSet = " + Arrays.deepToString(TestSet));//ugly print
+        System.out.println("TestSet = ");
+        String[][] split1 = new String[1][Dataset.length];
+        split1[0] = (Arrays.deepToString(TestSet)).split(Pattern.quote("], [")); //split at the comma
+        for (int row = 0; row < Dataset.length; row++) {
+            System.out.println(split1[0][row]);
+        }
+
     }
 
     abstract public ClassificationResults execute();
