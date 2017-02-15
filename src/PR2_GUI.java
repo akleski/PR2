@@ -630,8 +630,10 @@ public class PR2_GUI extends javax.swing.JFrame {
         if (radioBtn_featureSelection.isSelected()) {
             // the chosen strategy is feature selection
             int[] flags = new int[FeatureCount];
-            //FNew = projectSampleFromFLDValue(selectFeatures(flags, Integer.parseInt((String) comboBox_numOfDimensions.getSelectedItem())));
-            FNew = projectSampleFromFLDValue(selectFeatures(flags, Integer.parseInt("6")));//TODO overide for 6 FS dims
+            //int sztywnyDim = Integer.parseInt((String) comboBox_numOfDimensions.getSelectedItem());
+            
+            FNew = projectSampleFromFLDValue(selectFeatures(flags, Integer.parseInt((String) comboBox_numOfDimensions.getSelectedItem())));
+            //FNew = projectSampleFromFLDValue(selectFeatures(flags, Integer.parseInt("5")));//TODO overide for 6 FS dims
             
             System.out.println("");
             //System.out.println("FNew[][]="+Arrays.deepToString(F));//ugly print
@@ -774,7 +776,7 @@ public class PR2_GUI extends javax.swing.JFrame {
 //        jfc.setFileFilter(filter);
 //        if(jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
         try {
-            BufferedReader br = new BufferedReader(new FileReader("./Maple_Oak.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("./Maple_Oak_original.txt"));//TODO replace meaple oak file name
 //                BufferedReader br = new BufferedReader(new FileReader(jfc.getSelectedFile()));
             while ((s_tmp = br.readLine()) != null) {
                 s_out += s_tmp + '$';
@@ -1213,7 +1215,7 @@ abstract class Classifier {
 
     public double efficency(ClassificationResults classificationResult) {
         int suma = 0;
-        for (int i = 0, l = classificationResult.ClassificationList.length; i < l; i++) {//TODO znowu zmienna 'l' ...
+        for (int i = 0; i < classificationResult.ClassificationList.length; i++) {//TODO znowu zmienna 'l' ...
             if (classificationResult.ClassificationList[i] == this.OrigTestClassLabels[i]) {
                 suma++;
             }
@@ -1223,14 +1225,14 @@ abstract class Classifier {
 
     void generateTraining_and_Test_Sets(double[][] Dataset, String TrainSetSize, int[] OriginalClassLabels) {
         int[] Index = new int[Dataset[0].length];
-        double Th = Double.parseDouble(TrainSetSize) / 100.0;
+        double trainingPart = Double.parseDouble(TrainSetSize) / 100.0;
         int TrainCount = 0;
         int TestCount = 0;
         List<Integer> classLabelsTmpTrainSet = new ArrayList<Integer>();
         List<Integer> classLabelsTmpTestSet = new ArrayList<Integer>();
 
-        for (int i = 0; i < Dataset[0].length; i++) {
-            if (Math.random() <= Th) {
+        for (int i = 0; i < Dataset[0].length; i++) {//przepisanie odpowiednich classLabels do dwóch nowych pozbiorów
+            if (Math.random() <= trainingPart) {
                 Index[i] = TRAIN_SET;
                 TrainCount++;
                 classLabelsTmpTrainSet.add(OriginalClassLabels[i]);
@@ -1238,7 +1240,7 @@ abstract class Classifier {
                 Index[i] = TEST_SET;
                 TestCount++;
                 classLabelsTmpTestSet.add(OriginalClassLabels[i]);
-                RealClassLabelsTestSetProportions[OriginalClassLabels[i]]++;
+                RealClassLabelsTestSetProportions[OriginalClassLabels[i]]++; //nie kumam tego zbytnio, wychodzi to samo jakby zliczyc zera i jedynki z OrigTestClassLabels
             }
         }
 
@@ -1249,14 +1251,14 @@ abstract class Classifier {
         TestSet = new double[Dataset.length][TestCount];
 
         ClassLabels = classLabelsTmpTrainSet.toArray(new Integer[TrainCount]);
-        System.out.println("ClassLabels = " + Arrays.toString(ClassLabels));
+        System.out.println("ClassLabels of Train Set= " + Arrays.toString(ClassLabels));
         
         OrigTestClassLabels = classLabelsTmpTestSet.toArray(new Integer[TestCount]);
-        System.out.println("OrigTestClassLabels = " + Arrays.toString(OrigTestClassLabels));
+        System.out.println("ClassLabels of Test Set = " + Arrays.toString(OrigTestClassLabels));
         
         TrainCount = 0;
         TestCount = 0;
-        // label vectors for training/test sets?? imo, wpisanie do TrainingSet i TestSet wybranych podzbiorów cech/probek
+        //wpisanie do TrainingSet i TestSet wybranych podzbiorów cech/probek
         for (int i = 0; i < Dataset.length; i++) { //dataset.length tyle co w FS dimension
             for (int j = 0; j < Dataset[i].length; j++) {
                 if (Index[j] == TRAIN_SET) {
@@ -1293,11 +1295,11 @@ class NNClassifier extends Classifier {
 
     @Override
     public ClassificationResults execute() {
-        int[] ClassificationList = new int[TestSet[0].length];
+        int[] ClassificationList = new int[TestSet[0].length];//testSet[0].length = ilosc probek w testSet
         int[] results = {0, 0};
-        for (int i = 0, l = TestSet[0].length; i < l; i++) {
+        for (int i = 0; i < TestSet[0].length; i++) {//znowu zmienna l... ?
             double minDistance = Double.MAX_VALUE;
-            for (int j = 0, lt = TrainingSet[0].length; j < lt; j++) {
+            for (int j = 0; j < TrainingSet[0].length; j++) {
                 double tmpDistance = 0;
                 if (minDistance > (tmpDistance = calculateDistanceBetweenSetsVectors(TestSet, i, TrainingSet, j))) {
                     minDistance = tmpDistance;
@@ -1306,6 +1308,8 @@ class NNClassifier extends Classifier {
             }
             results[ClassificationList[i]]++;
         }
+        System.out.println("ClassificationList = " + Arrays.toString(ClassificationList));
+        System.out.println("results = " + Arrays.toString(results));
         return new ClassificationResults(ClassificationList, results);
     }
 
@@ -1338,7 +1342,7 @@ class kNNClassifier extends NNClassifier {
         }
     }
 
-    private class ClassifierElementComparator implements Comparator<ClassifierElement> {
+    private class ClassifierElementComparator implements Comparator<ClassifierElement> {//TODO sprawdz comparatory
 
         public int compare(ClassifierElement o1, ClassifierElement o2) {
             if (o1.distance > o2.distance) {
@@ -1356,9 +1360,9 @@ class kNNClassifier extends NNClassifier {
     public ClassificationResults execute() {
         int[] ClassificationList = new int[TestSet[0].length];
         int[] results = {0, 0};
-        for (int i = 0, l = TestSet[0].length; i < l; i++) {
-            PriorityQueue<ClassifierElement> minDistance = new PriorityQueue<ClassifierElement>(k, new ClassifierElementComparator());
-            for (int j = 0, lt = TrainingSet[0].length; j < lt; j++) {
+        for (int i = 0; i < TestSet[0].length; i++) {
+            PriorityQueue<ClassifierElement> minDistance = new PriorityQueue<ClassifierElement>(k, new ClassifierElementComparator());//
+            for (int j = 0; j < TrainingSet[0].length; j++) {
                 minDistance.add(new ClassifierElement(calculateDistanceBetweenSetsVectors(TestSet, i, TrainingSet, j), ClassLabels[j]));
                 if (minDistance.size() > k) {
                     minDistance.poll();
