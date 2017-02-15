@@ -477,7 +477,7 @@ public class PR2_GUI extends javax.swing.JFrame {
                     .addComponent(l_trainingPart)
                     .addComponent(textField_TrainSetSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(l_percent_sign))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panel_results.setBorder(javax.swing.BorderFactory.createTitledBorder("Results"));
@@ -630,7 +630,9 @@ public class PR2_GUI extends javax.swing.JFrame {
         if (radioBtn_featureSelection.isSelected()) {
             // the chosen strategy is feature selection
             int[] flags = new int[FeatureCount];
-            FNew = projectSampleFromFLDValue(selectFeatures(flags, Integer.parseInt((String) comboBox_numOfDimensions.getSelectedItem())));
+            //FNew = projectSampleFromFLDValue(selectFeatures(flags, Integer.parseInt((String) comboBox_numOfDimensions.getSelectedItem())));
+            FNew = projectSampleFromFLDValue(selectFeatures(flags, Integer.parseInt("6")));//TODO overide for 6 FS dims
+            
             System.out.println("");
             //System.out.println("FNew[][]="+Arrays.deepToString(F));//ugly print
             System.out.println("FNew = ");
@@ -1021,7 +1023,7 @@ public class PR2_GUI extends javax.swing.JFrame {
         FLDValue winner;
         long startTime = System.nanoTime();
         winner = dim == 1
-                ? selectFeature1D() : checkBox_SFS.isSelected()
+                ? selectFeature1D() : true /*checkBox_SFS.isSelected()*///TODO overide for SFS
                         ? selectFeatureSFS(dim) : selectFeatureND(dim);
         //JOptionPane.showMessageDialog(rootPane, "Time elapsed: "+TimeUnit.MILLISECONDS.convert(System.nanoTime()-startTime,TimeUnit.NANOSECONDS)+"ms","Results", JOptionPane.INFORMATION_MESSAGE);
         Arrays.sort(winner.getIndexes());
