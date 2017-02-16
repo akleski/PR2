@@ -631,10 +631,10 @@ public class PR2_GUI extends javax.swing.JFrame {
             // the chosen strategy is feature selection
             int[] flags = new int[FeatureCount];
             //int sztywnyDim = Integer.parseInt((String) comboBox_numOfDimensions.getSelectedItem());
-            
+
             FNew = projectSampleFromFLDValue(selectFeatures(flags, Integer.parseInt((String) comboBox_numOfDimensions.getSelectedItem())));
-            //FNew = projectSampleFromFLDValue(selectFeatures(flags, Integer.parseInt("5")));//TODO overide for 6 FS dims
-            
+            //FNew = projectSampleFromFLDValue(selectFeatures(flags, Integer.parseInt("5")));//TODO overide for x FS dims
+
             System.out.println("");
             //System.out.println("FNew[][]="+Arrays.deepToString(F));//ugly print
             System.out.println("FNew = ");
@@ -776,7 +776,7 @@ public class PR2_GUI extends javax.swing.JFrame {
 //        jfc.setFileFilter(filter);
 //        if(jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
         try {
-            BufferedReader br = new BufferedReader(new FileReader("./Maple_Oak_original.txt"));//TODO replace meaple oak file name
+            BufferedReader br = new BufferedReader(new FileReader("./Maple_Oak_F7_Samples16A16Q.txt"));//TODO replace meaple oak file name
 //                BufferedReader br = new BufferedReader(new FileReader(jfc.getSelectedFile()));
             while ((s_tmp = br.readLine()) != null) {
                 s_out += s_tmp + '$';
@@ -1215,7 +1215,7 @@ abstract class Classifier {
 
     public double efficency(ClassificationResults classificationResult) {
         int suma = 0;
-        for (int i = 0; i < classificationResult.ClassificationList.length; i++) {//TODO znowu zmienna 'l' ...
+        for (int i = 0; i < classificationResult.ClassificationList.length; i++) {
             if (classificationResult.ClassificationList[i] == this.OrigTestClassLabels[i]) {
                 suma++;
             }
@@ -1252,10 +1252,10 @@ abstract class Classifier {
 
         ClassLabels = classLabelsTmpTrainSet.toArray(new Integer[TrainCount]);
         System.out.println("ClassLabels of Train Set= " + Arrays.toString(ClassLabels));
-        
+
         OrigTestClassLabels = classLabelsTmpTestSet.toArray(new Integer[TestCount]);
         System.out.println("ClassLabels of Test Set = " + Arrays.toString(OrigTestClassLabels));
-        
+
         TrainCount = 0;
         TestCount = 0;
         //wpisanie do TrainingSet i TestSet wybranych podzbiorów cech/probek
@@ -1368,6 +1368,7 @@ class kNNClassifier extends NNClassifier {
                     minDistance.poll();
                 }
             }
+
             ClassificationList[i] = classifiy(minDistance);
             results[ClassificationList[i]]++;
         }
@@ -1377,8 +1378,10 @@ class kNNClassifier extends NNClassifier {
     private int classifiy(PriorityQueue<ClassifierElement> queue) {
         int classLabelProp[] = {0, 0};
         for (ClassifierElement elem : queue) {
+            System.out.println("minDistance = (distance)"+elem.distance+" & (label) " + elem.label);
             classLabelProp[elem.label]++;
         }
+        System.out.println("");
         return classLabelProp[0] > classLabelProp[1] ? 0 : 1;
     }
 }
@@ -1387,21 +1390,25 @@ class NMClassifier extends NNClassifier {
 
     @Override
     public ClassificationResults execute() {
+        System.out.println("execute NM TrainingSet.length =" + TrainingSet.length);
+        System.out.println("execute NM TrainingSet[0].length =" + TrainingSet[0].length);
         double[][] avgVector = new double[TrainingSet.length][2];
         int[] trainClassN = {0, 0};
-        for (int i = 0, l = TrainingSet[0].length; i < l; i++) {
-            for (int j = 0, m = TrainingSet.length; j < m; j++) {
+        for (int i = 0; i < TrainingSet[0].length; i++) {
+            for (int j = 0; j < TrainingSet.length; j++) {
                 avgVector[j][ClassLabels[i]] += TrainingSet[j][i];
                 trainClassN[ClassLabels[i]]++;
             }
         }
-        for (int i = 0, l = TrainingSet.length; i < l; i++) {
+        for (int i = 0; i < TrainingSet.length; i++) {
             avgVector[i][0] = avgVector[i][0] / trainClassN[0];
             avgVector[i][1] = avgVector[i][1] / trainClassN[1];
         }
+
+        System.out.println("avgVector=" + Arrays.deepToString(avgVector));
         int[] ClassificationList = new int[TestSet[0].length];
         int[] proportion = {0, 0};
-        for (int i = 0, l = TestSet[0].length; i < l; i++) {
+        for (int i = 0; i < TestSet[0].length; i++) {
             double distanceA = calculateDistanceBetweenSetsVectors(TestSet, i, avgVector, 0);
             double distanceB = calculateDistanceBetweenSetsVectors(TestSet, i, avgVector, 1);
             if (distanceA < distanceB) {
